@@ -1,0 +1,17 @@
+#! /bin/bash
+set -e
+if [ -z "$1" ]
+then
+  echo "Usage: $0 <c64|plus4> [ntsc]"
+  exit 1
+fi
+target="$1"
+model="$2"
+cl65 -t "$target" -C "izo-$target.cfg" -u __EXEHDR__ main.s
+if [ "$target" == "c64" ]
+then
+  vice="x64"
+else
+  vice="xplus4"
+fi
+"$vice" -model "$target$model" main
